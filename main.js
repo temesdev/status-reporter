@@ -80,7 +80,11 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
 client.on('message', message => {
     if(message.author.bot) return
 
-    if(message.content.startsWith('sr!init')) {
+    if(message.content.toLowerCase() == 'sr!help') {
+        message.channel.send(`Hi, I'm the fucking status reporter\ni have this command\nsr!init <#${message.channel.id}> <@${message.author.id}>\ncool\nright?`)
+    }
+
+    if(message.content.toLowerCase().startsWith('sr!init')) {
         //initGuild(message.guild, message)
         let m = message.mentions
         if(m.channels.size != 1) return message.channel.send('You must mention 1 channel')
