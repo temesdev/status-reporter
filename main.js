@@ -35,7 +35,7 @@ async function findMany(filter, options = {}) {
 }
 
 async function constructEmbed(data) {
-    let e = { fields: [], color: 0x36393f, description: `[Invite me](https://discordapp.com/api/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=2048) or vote [here](asd.com)` }
+    let e = { fields: [], color: 0x36393f, description: `[\`Invite\`](https://discordapp.com/api/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=2048) | [\`Vote\`](https://discordbots.org/bot/589539244679102467) | [\`Rate\`](https://discord.boats/bot/589539244679102467)` }
     let c = []
     let message = await fetch(data)
     data.tracking.forEach(m => {
