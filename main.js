@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const { connectToDatabase } = require('./utils.js')
-const guild = require('./schemas/guildSchema.js')
 let db
 
 const emojis = {
@@ -64,6 +63,7 @@ async function initGuild(guild, message) {
 client.on('ready', _ => {
     console.log('Hello world!')
     db = connectToDatabase('mongodb://localhost:27017/statusreporter')
+    client.user.setPresence({ game: { name: 'sr!help' } })
 })
 
 client.on('presenceUpdate', async (oldMember, newMember) => {
@@ -81,11 +81,16 @@ client.on('message', message => {
     if(message.author.bot) return
 
     if(message.content.toLowerCase() == 'sr!help') {
-        message.channel.send(`Hi, I'm the fucking status reporter\ni have this command\nsr!init <#${message.channel.id}> <@${message.author.id}>\ncool\nright?`)
+        message.channel.send({ embed: {
+            description: "**The best bot for keeping track of users' & bots' statuses**\n\nExample usage: `sr!init #channel @user1 @user2`\n\nTools used for the bot:\n- JavaScript / Discord.JS\n- MongoDB / Mongoose\n- Neovim\n\nThe bot was developed by Cyber28 and Doggo under the Temes dev team. The bot is fully open-source under the MIT license, and we highly encourage you to self-host an instance of it.",
+            image: {
+                url: 'https://i.imgur.com/Ba1j2En.png'
+            },
+            color: 0x36393F
+        }})
     }
 
     if(message.content.toLowerCase().startsWith('sr!init')) {
-        //initGuild(message.guild, message)
         let m = message.mentions
         if(m.channels.size != 1) return message.channel.send('You must mention 1 channel')
         if(m.users.size < 1) return message.channel.send('You must mention at least 1 user')
